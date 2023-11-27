@@ -71,5 +71,8 @@ def test_llm_models(name, params, repo_models, testing_llm_model):
         time.sleep(3)
         ready_resp = requests.get(ready_ep, json={}, headers=headers)
         assert ready_resp.status_code == 400
+        
+        # vllm model will release memory with a delay
+        time.sleep(10)
 
     assert succ, 'infer has execption'
