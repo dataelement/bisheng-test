@@ -1,0 +1,42 @@
+name: Upload to DockerHub
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    branches:
+      - "main"
+
+env:
+  NEXUS_REPO: https://public2:qTongs8YdIwXSRPX@nexus.dataelem.com/repository/product/bisheng
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    #if: startsWith(github.event.ref, 'refs/tags')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set python version 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build bisheng-test and push Docker hub
+      - name: Build bisheng-test and push
+        id: docker_build_test
+        run: |
+          wget --no-check-certificate ${{ env.NEXUS_REPO }}/bisheng-test-data.tar.gz
+          tar zxf bisheng-test-data.tar.gz -C ./data/
+          docker build -t dataelement/bisheng-test:latest -f docker/Dockerfile .
+          docker push dataelement/bisheng-test:latest
+
