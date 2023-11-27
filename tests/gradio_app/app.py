@@ -18,7 +18,7 @@ def run_test(input_cmd, params, sub_module):
     test_module = sub_module if sub_module else "./tests"
     # test_module = "./tests/testcases/bisheng_uns"
 
-    allure_set = "--alluredir /app/data/allure-results"
+    allure_set = "--alluredir /app/data/allure-results --clean-alluredir"
     pytest_args = "-p no:warnings -s -v"
     if input_cmd:
         command = f"{input_cmd} {allure_set}"       
