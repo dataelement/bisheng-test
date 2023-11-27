@@ -11,10 +11,6 @@ app = FastAPI()
 
 def run_test(input_cmd, params, sub_module):
     env = os.environ
-    env['http_proxy'] = ''
-    env['https_proxy'] = ''
-    env['HTTP_PROXY'] = ''
-    env['HTTPS_PROXY'] = ''
     for kv in params.split('\n'):
         k, v = kv.strip().split('=', 1)
         env[k] = v
@@ -64,9 +60,9 @@ with gr.Blocks() as demo:
         with gr.Column(scale=1):
             gr.Markdown("## Bisheng Full Test")
             default_params = """
-                TEST_BISHENG_EP=https://bisheng.dataelem.com
-                TEST_UNSTRUCTURED_EP=192.168.106.12:10001
-                TEST_RT_EP=192.168.106.12:9001
+                TEST_BISHENG_EP=192.168.106.120:3002
+                TEST_UNSTRUCTURED_EP=192.168.106.12:20001
+                TEST_RT_EP=192.168.106.12:19001
                 TEST_RT_GPU=0
                 TEST_RT_LLM_GPU=0,1
             """
