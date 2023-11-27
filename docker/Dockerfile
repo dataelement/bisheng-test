@@ -11,11 +11,11 @@ ARG PIP_REPO=https://mirrors.tencent.com/pypi/simple
 RUN apt update && apt-get install -y nginx vim
 
 # Configure language
-RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 RUN locale-gen en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 
 # Prepare env for test
 RUN mkdir -p /app/bin
