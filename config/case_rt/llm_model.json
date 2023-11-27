@@ -1,0 +1,67 @@
+{
+  "models": ["chatglm2-6b", "Qwen-7B-Chat", "Baichuan-13B-Chat", "Qwen-7B-Chat", "Qwen-14B-Chat", "Baichuan2-13B-Chat"],
+  "load_params": [
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "llm.ChatGLM2",
+        "pymodel_params": "{\"max_tokens\": 32768}",
+        "gpu_memory": "16",
+        "instance_groups": "device=gpu;gpus=0"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "llm.QwenChat",
+        "precision": "bf16",
+        "gpu_memory": "20",
+        "instance_groups": "device=gpu;gpus=0",
+        "reload": "1"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "llm.BaichuanChat",
+        "pymodel_params":  "{\"max_tokens\": 4096}",
+        "gpu_memory": "30",
+        "instance_groups": "device=gpu;gpus=0,1",
+        "reload": "1"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.vllm_model",
+        "pymodel_type": "llm.vLLMQwen7bChat",
+        "pymodel_params": "{\"temperature\": 0.0, \"stop\": [\"<|im_end|>\", \"<|im_start|>\",\"<|endoftext|>\"]}",
+        "gpu_memory": "20",
+        "instance_groups": "device=gpu;gpus=0",
+        "reload": "1",
+        "verbose": "0"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.vllm_model",
+        "pymodel_type": "llm.vLLMQwen14bChat",
+        "pymodel_params": "{\"temperature\": 0.0, \"stop\": [\"<|im_end|>\", \"<|im_start|>\",\"<|endoftext|>\"]}",
+        "gpu_memory": "40",
+        "instance_groups": "device=gpu;gpus=0,1",
+        "reload": "1",
+        "verbose": "0"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.vllm_model",
+        "pymodel_type": "llm.vLLMBaichuan2Chat",
+        "pymodel_params": "{\"temperature\": 0.0, \"stop\": [\"<reserved_107>\", \"<reserved_106>\"]}",
+        "gpu_memory": "40",
+        "instance_groups": "device=gpu;gpus=0,1",
+        "reload": "1",
+        "verbose": "0"
+      }
+    } 
+  ]
+}

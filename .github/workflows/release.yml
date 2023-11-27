@@ -1,0 +1,52 @@
+name: Upload to PyPI
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - "v*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    #if: startsWith(github.event.ref, 'refs/tags')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set python version 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Build whl
+        run: |
+          pip install Cython
+          pip install wheel
+          tag=${{ github.ref_name }}
+          ver=${tag:1}
+          RELEASE_VERSION=$ver python setup.py bdist_wheel
+
+      # - name: Publish distribution to pypi repo
+      #   run: |
+      #     pip install twine
+      #     twine upload dist/* -u ${{ secrets.PYPI_USER }} -p ${{ secrets.PYPI_PASSWORD }} --repository pypi
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build bisheng-test and push Docker hub
+      - name: Build bisheng-unstructrued and push
+        id: docker_build_unstructrued
+        run: |
+          tag=${{ github.ref_name }}
+          ver=${tag:1}
+          docker build --build-arg BISHENG_TEST_VER=${ver} -t dataelement/bisheng-test:${ver} -f docker/Dockerfile .
+          docker push dataelement/bisheng-test:${ver}
+

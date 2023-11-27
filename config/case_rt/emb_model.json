@@ -1,0 +1,32 @@
+{
+  "models": ["multilingual-e5-large", "bge-large-zh", "gte-large"],
+  "load_params": [
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "embedding.ME5Embedding",
+        "gpu_memory": "3",
+        "instance_groups": "device=gpu;gpus=0",
+        "reload": "1"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "embedding.BGEZhEmbedding",
+        "gpu_memory": "3",
+        "instance_groups": "device=gpu;gpus=0",
+        "reload": "1"
+      }
+    },
+    {
+      "parameters": {
+        "type": "dataelem.pymodel.huggingface_model",
+        "pymodel_type": "embedding.GTEEmbedding",
+        "gpu_memory": "3",
+        "instance_groups": "device=gpu;gpus=0",
+        "reload": "1"
+      }
+    }
+  ]
+}

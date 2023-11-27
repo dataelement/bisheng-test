@@ -1,0 +1,36 @@
+part_files:
+  - 
+    file: /app/data/uns_data/examples/docs/达梦数据库招股说明书.pdf
+    type: pdf
+  - 
+    file: /app/data/uns_data/examples/docs/maoxuan_sample1.jpg
+    type: image-jpg
+
+topdf_files:
+  - 
+    file: /app/data/uns_data/examples/docs/maoxuan_wikipedia.html
+    type: html
+  - 
+    file: /app/data/uns_data/examples/docs/maoxuan_volumn_v1.txt
+    type: txt
+  - 
+    file: /app/data/uns_data/examples/docs/test.md
+    type: md
+  - 
+    file: /app/data/uns_data/examples/docs/毛泽东课件.ppt
+    type: ppt
+  - 
+    file: /app/data/uns_data/examples/docs/毛泽东课件.pptx
+    type: pptx
+  -
+    file: /app/data/uns_data/examples/docs/tests-example.xls
+    type: xls
+  -
+    file: /app/data/uns_data/examples/docs/tests-example.xlsx
+    type: xlsx
+  -
+    file: /app/data/uns_data/examples/docs/maoxuan_sample.docx
+    type: docx
+  - 
+    file: /app/data/uns_data/examples/docs/maoxuan_sample.doc
+    type: doc
