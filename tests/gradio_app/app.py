@@ -86,7 +86,7 @@ with gr.Blocks() as demo:
             gr.Markdown("### 运行结果")
             result2 = gr.Textbox(label="result", lines=1)
             btn3 = gr.Button("运行")
-            gr.Markdown("[See Allure Report](/allure)")
+            gr.Markdown("[See Allure Report](/allure/)")
             btn3.click(gen_report, [], result2)
             btn4 = gr.Button("重置")
             btn4.click(lambda : (None), [], [result2])
