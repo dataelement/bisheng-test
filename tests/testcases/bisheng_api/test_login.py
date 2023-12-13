@@ -1,28 +1,26 @@
 # flake8: noqa
+import os
 import pytest
 import allure
+from tests.confdata import CONFDATA
 
 from tests.utils.log_util import LogUtil
 from tests.utils.res_check import compare_res
 from tests.utils.http_utils import prepare_data_login
 
-
 @allure.epic('API服务接口自动化测试')
-@allure.feature('端口3002')
-@allure.story('通用识别模型自动化接口结果')
+@allure.story('自动化接口结果')
 class TestBISHENGLogin:
-    @pytest.mark.parametrize("args", pytest.lazy_fixture("login_cases"))
-    def test_login(self, args):
+    @pytest.mark.parametrize("args", CONFDATA.login_cases())
+    def test_login(self,args):
         
         # for args in data_item:
         # 打印用例ID和名称到报告中显示
-        print("用例ID:{}".format(args['id']))
-        
-        print("用例名称:{}".format(args['case_name']))
-        # print("用例图片:{}".format(args['body']['image']))
+        print("用例ID:{}".format(args[0]['id']))
+        print("用例名称:{}".format(args[0]['case_name']))
 
         bisheng_ep = os.environ.get('TEST_BISHENG_EP')
-        res = prepare_data_login(args, TEST_HOST)
+        res = prepare_data_login(args, bisheng_ep)
 
         # log_text = "case_name：%s" % (case_name)
         # LogUtil().info(log_text)

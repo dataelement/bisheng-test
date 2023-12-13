@@ -58,6 +58,17 @@ class ConfData(object):
             infos.append((model, param))
 
         return infos
+    
+    
+    def login_cases(self):
+        yaml_file = self.config_dict.get('BISHENG_LOGIN')
+        config = read_yaml(yaml_file)
+        cases = config['case_groups']
 
+        infos = []
+        for case in zip(cases):
+            infos.append(case)
+
+        return infos
 
 CONFDATA = ConfData()

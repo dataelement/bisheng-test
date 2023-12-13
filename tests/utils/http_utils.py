@@ -3,6 +3,7 @@ import requests
 import os
 import json
 import base64
+from tests.testcases import bisheng_api
 
 from tests.utils.image_util import convert_b64
 
@@ -53,12 +54,10 @@ def prepare_data_regist(args, TEST_HOST):
     return res
 
 
-def prepare_data_login(args, TEST_HOST):
+def prepare_data_login(args, bisheng_ep):
     headers = {"Content-Type": "application/json"}
-    # url = "http://" + TEST_HOST + ":" + TEST_PORT + args['url']
-    url = TEST_HOST + args['url']
-    res = HttpUtils.http_post_login(headers, url, args['body'])
-    # res = HttpUtils.http_post(headers, url, args['body'])
+    url = bisheng_ep + args[0]['url']
+    res = HttpUtils.http_post_login(headers, url, args[0]['body'])
     return res
 
 

@@ -1,0 +1,23 @@
+case_groups:
+- id: bisheng_login接口
+  url: /api/v1/user/login
+  case_name: login接口
+  method: post
+  body: {"user_name": "admin", "password": "dataelem"}
+  expectresult: {"status": "success"}
+  expectdata: test_login.txt
+- id: bisheng_login接口
+  url: /api/v1/user/login
+  case_name: login接口_登录密码错误
+  method: post
+  body: {"user_name": "admin", "password": "dataelem1"}
+  expectresult: {"status": "fail"}
+  expectdata: test_login_pwerr.txt
+- id: bisheng_login接口
+  url: /api/v1/user/login
+  case_name: login接口_用户名&密码为空
+  method: post
+  body: {"user_name": "333", "password": ""}
+  expectresult: {"status": "fail"}
+  expectdata: test_login_pwerr.txt
+#
