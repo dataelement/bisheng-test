@@ -11,7 +11,6 @@ class LogUtil(object):
         self.logger.handlers.clear()
         # 创建日志文件目录
         output_path = os.environ.get('OUTPUT_PATH', '/app/output')
-        # output_path = os.environ.get('OUTPUT_PATH', '/Users/sara/Desktop/DataElem/dev/bisheng-test/output')
 
         logs_dir = "%s/logs" % output_path
         if os.path.exists(logs_dir) and os.path.isdir(logs_dir):
