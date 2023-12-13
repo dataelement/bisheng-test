@@ -80,9 +80,9 @@ def check_error_res(api_res, expectdata, status_report):
 
 
 def compare_res(api_res, saved_res, status_report):
-    data_path = os.environ.get('DATA_PATH', '/app/data')
+    data_path = os.environ.get('API_DATA_PATH')
     expectdata_path = os.path.join(data_path,
-        "resultresponse", saved_res["expectdata"])
+        saved_res[0]["expectdata"])
 
     if not os.path.exists(expectdata_path):
         print("Error: 缺少验证数据 {}".format(expectdata_path))
@@ -91,6 +91,7 @@ def compare_res(api_res, saved_res, status_report):
         expectdata = eval(f.read())
 
         # status_report = check_normal_res(status_report, api_res, expectdata)
+        
         saved_report = check_normal_res(status_report, api_res, expectdata)
         # 接口返回结果没有 data json等字段，说明返回的是一个报警信息
         # elif "data" in ocr_res and ocr_res["data"] is None:
