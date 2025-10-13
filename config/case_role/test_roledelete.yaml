@@ -1,0 +1,7 @@
+case_groups:
+- id: bisheng_role接口
+  url: /api/v1/role/
+  case_name: 删除role的接口
+  method: delete
+  body: {"id": "" } 
+  expectresult: {"status_code": 200}

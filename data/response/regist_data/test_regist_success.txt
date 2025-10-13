@@ -1,0 +1,17 @@
+{
+    "status_code": 200,
+    "status_message": "SUCCESS",
+    "data": {
+        "remark": null,
+        "email": null,
+        "phone_number": null,
+        "create_time": "2025-08-20T19:28:57",
+        "user_id": 330,
+        "password_update_time": "2025-08-20T19:28:57",
+        "dept_id": null,
+        "user_name": "11234325342",
+        "delete": 0,
+        "update_time": "2025-08-20T19:28:57",
+        "password": "07cd6cf4c73a50506e369a397fe135c7"
+    }
+}

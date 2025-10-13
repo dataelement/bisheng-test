@@ -1,0 +1,7 @@
+case_groups:
+- id: bisheng_创建知识库
+  url: /api/v1/knowledge/create
+  case_name: 创建知识库接口
+  method: post
+  body: {"name":"Sara-勿动","description":"自动化测试","model":337,"type":0}
+  expectdata: knowledge_data/test_createknowledge.txt

@@ -61,12 +61,12 @@ with gr.Blocks() as demo:
             gr.Markdown("## Bisheng Full Test")
             default_params = """
                 TEST_BISHENG_EP=192.168.106.120:3002
-                TEST_UNSTRUCTURED_EP=192.168.106.12:20001
-                TEST_RT_EP=192.168.106.12:19001
-                TEST_RT_GPU=0
-                TEST_RT_LLM_GPU=0,1
-            """
 
+            """
+            # TEST_UNSTRUCTURED_EP = 192.168.106.12: 20001
+            # TEST_RT_EP = 192.168.106.12: 19001
+            # TEST_RT_GPU = 0
+            # TEST_RT_LLM_GPU = 0, 1
             default_params = _norm_str(default_params)
             params = gr.Textbox(value=default_params, label="参数设置", lines=5)
             cmd = gr.Textbox(label="运行命令", lines=2)

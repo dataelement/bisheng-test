@@ -1,0 +1,9 @@
+Requirement already satisfied: attrs in /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages (21.4.0)
+Collecting attrs
+  Using cached attrs-25.3.0-py3-none-any.whl (63 kB)
+Installing collected packages: attrs
+  Attempting uninstall: attrs
+    Found existing installation: attrs 21.4.0
+    Uninstalling attrs-21.4.0:
+      Successfully uninstalled attrs-21.4.0
+Successfully installed attrs-25.3.0

@@ -1,88 +1,92 @@
 # flake8: noqa
 import argparse
-import atexit
 import os
-import shutil
-import tempfile
+import pytest
+import sys
+import subprocess
+from pathlib import Path
+from multiprocessing import cpu_count
 
-# refer https://github.com/taichi-dev/taichi/tree/master/tests/python
-def _test_python(args, default_dir="tests"):
+
+def _test_python(args, default_dir="tests/testcases"):
     print("\nRunning Python tests...\n")
 
-    curr_dir = os.path.dirname(os.path.abspath(__file__))
-    test_dir = os.path.join(curr_dir, default_dir)
+    curr_dir = Path(__file__).parent.resolve()
+    test_dir = curr_dir / default_dir
     pytest_args = []
 
-    # TODO: use pathlib to deal with suffix and stem name manipulation
+    # 处理单个测试文件
     if args.files:
-        # run individual tests
         for f in args.files:
-            # auto-complete file names
-            if not f.startswith("test_"):
-                f = "test_" + f
-            if not (f.endswith(".py") or f.endswith(".ipynb")):
-                f = f + ".py"
-            file = os.path.join(test_dir, f)
-            has_tests = False
-            if os.path.exists(file):
-                pytest_args.append(file)
-                has_tests = True
-            assert has_tests, f"Test {f} does not exist."
+            file_path = Path(f)
+            # 如果是相对路径，尝试在测试目录中查找
+            if not file_path.is_absolute():
+                file_path = test_dir / file_path
+
+            # 自动补全文件名（仅对文件名部分添加 test_ 和 .py）
+            if not file_path.name.startswith("test_"):
+                file_path = file_path.with_name(f"test_{file_path.name}")
+            if not file_path.suffix == ".py":
+                file_path = file_path.with_suffix(".py")
+
+            if file_path.exists():
+                pytest_args.append(str(file_path))
+            else:
+                raise FileNotFoundError(f"Test file not found: {file_path}")
     else:
-        # run all the tests
-        pytest_args = [test_dir]
-    pytest_args += ["--nbmake"]
-    if args.verbose:
+        # 默认运行整个测试目录
+        pytest_args.append(str(test_dir))
+
+    # ✅ 添加 allure 报告生成目录
+    allure_dir = "./allure-results"
+    pytest_args += ["--alluredir", allure_dir]
+
+    # 添加通用参数
+    if getattr(args, "verbose", False):
         pytest_args += ["-v"]
-    if args.rerun:
-        pytest_args += ["--reruns", args.rerun]
-    try:
-        if args.coverage:
-            pytest_args += ["--cov-branch", "--cov=python/bisheng"]
-        if args.cov_append:
-            pytest_args += ["--cov-append"]
-        if args.keys:
-            pytest_args += ["-k", args.keys]
-        if args.marks:
-            pytest_args += ["-m", args.marks]
-        if args.failed_first:
-            pytest_args += ["--failed-first"]
-        if args.fail_fast:
-            pytest_args += ["--exitfirst"]
-        if args.timeout > 0:
-            pytest_args += [
-                "--durations=15",
-                "-p",
-                "pytest_hardtle",
-                f"--timeout={args.timeout}",
-            ]
-    except AttributeError:
-        pass
+    if getattr(args, "rerun", None):
+        pytest_args += ["--reruns", str(args.rerun)]
 
-    try:
-        from multiprocessing import cpu_count  # pylint: disable=C0415
+    # 添加可选参数（兼容属性不存在的情况）
+    optional_args = {
+        "coverage": ["--cov-branch", "--cov=."],  # 默认当前目录
+        "cov_append": ["--cov-append"],
+        "keys": ["-k", args.keys],
+        "marks": ["-m", args.marks],
+        "failed_first": ["--failed-first"],
+        "fail_fast": ["--exitfirst"],
+        "timeout": [
+            "--durations=15",
+            f"--timeout={args.timeout}"
+        ] if getattr(args, "timeout", 0) > 0 else None
+    }
 
-        threads = min(8, cpu_count())  # To prevent running out of memory
+    for attr, arg_list in optional_args.items():
+        if getattr(args, attr, None) and arg_list:
+            pytest_args += arg_list
+
+    # 设置线程数
+    try:
+        threads = min(8, cpu_count())
     except NotImplementedError:
         threads = 2
-
-    env_threads = os.environ.get("BISHENG_TEST_THREADS", "")
-    threads = args.threads or env_threads or threads
+    threads = getattr(args, "threads", None) or os.environ.get("BISHENG_TEST_THREADS", threads)
     print(f"Starting {threads} testing thread(s)...")
-    if args.show_output:
-        pytest_args += ["-s"]
-        print(f"Due to how pytest-xdist is implemented, the -s option does not work with multiple thread...")
-    else:
-        if int(threads) > 1:
-            pytest_args += ["-n", str(threads), "--dist=worksteal"]
-    import pytest  # pylint: disable=C0415
 
+    if getattr(args, "show_output", False):
+        pytest_args += ["-s"]
+        if int(threads) > 1:
+            print("Warning: -s option may not work with multiple threads (pytest-xdist limitation)")
+    elif int(threads) > 1:
+        pytest_args += ["-n", str(threads)]
+
+    # 运行 pytest 并返回退出码
     return int(pytest.main(pytest_args))
 
-
+# @pytest.mark.skip(reason="This is not a pytest test function, it's the main runner")
 def test():
-    """Run the tests"""
-    parser = argparse.ArgumentParser(description=f"Run bisheng python test")
+    """Run the tests and auto-generate Allure report"""
+    parser = argparse.ArgumentParser(description="Run bisheng python test")
     parser.add_argument("files", nargs="*", help='Test name(s) to be run, e.g. "cli"')
     parser.add_argument(
         "-c",
@@ -192,13 +196,62 @@ def test():
     args = parser.parse_args()
     print(args)
 
+    ret = 0
     for _ in range(run_count):
         ret = _test_python(args)
         if ret == 5:
-            # treat 'no tests collected' as success
-            ret = 0
-        if ret != 0:
-            exit(ret)
+            ret = 0  # 没有收集到测试，也认为是OK
+
+        # 打印友好的总结信息，不调用 sys.exit
+        if ret == 0:
+            print("\n✅ 执行完毕：所有测试通过！")
+        elif ret == 1:
+            print("\n⚠️  执行完毕：有测试失败！（但脚本正常结束，不报错）")
+        elif ret == 4:
+            print("\n⚠️  执行完毕：没有收集到任何测试用例（检查文件/路径是否正确）")
+        else:
+            print(f"\n⚠️  执行完毕：测试返回未知状态码 ret={ret}")
+
+    # =============================
+    # ✅ 自动生成并打开 Allure 报告
+    # =============================
+    allure_results_dir = "./allure-results"
+    allure_report_dir = "./allure-report"
+
+    if not os.path.exists(allure_results_dir):
+        print(f"⚠️  警告：未找到 Allure 数据目录 '{allure_results_dir}'，跳过生成报告。")
+    else:
+        print("🔍 正在生成 Allure 测试报告...")
+        try:
+            # 生成 Allure 报告
+            subprocess.run([
+                "allure", "generate",
+                allure_results_dir,
+                "-o", allure_report_dir,
+                "--clean"
+            ], check=True)
+            print(f"✅ Allure 报告已生成，路径：{os.path.abspath(allure_report_dir)}")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ 生成 Allure 报告失败: {e}")
+        except FileNotFoundError:
+            print("❌ 未找到 `allure` 命令。请确保已安装 Allure CLI 并添加到 PATH。")
+
+        # 检测是否为 PyCharm 环境，避免重复打开
+        is_pycharm = "PYCHARM_HOSTED" in os.environ or "PYCHARM" in os.environ.get("TERM", "")
+
+        if not is_pycharm:
+            try:
+                print("🔗 正在打开 Allure 报告...")
+                subprocess.Popen(["allure", "open", allure_report_dir])
+            except Exception as e:
+                print(f"⚠️ 打开报告失败: {e}")
+        else:
+            print("📋 PyCharm 环境 detected，跳过自动打开报告")
+            print(f"   请手动运行: allure open {allure_report_dir}")
+
+    # ✅ 确保脚本退出，返回 pytest 的退出码
+    print(f"🔚 脚本执行完成，退出码: {ret}")
+    sys.exit(ret)
 
 
 if __name__ == "__main__":
