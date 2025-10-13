@@ -1,0 +1,88 @@
+# case_groups:
+# - id: 技能_知识库问答
+#   url: /api/v1/process/
+#   case_name: 知识库问答_pdf
+#   method: post
+#   body: {"inputs": {"default_input":"合同的签约日期","id":"RetrievalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: case_flow/test_knowledgeqa_pdf.txt
+case_groups:
+- id: 技能_知识库问答
+  url: /api/v1/process/
+  case_name: 知识库问答_pdf
+  method: post
+  body: {"inputs": {"default_input":"合同的签约日期","id":"RetrievalQA-XLqYb"}}
+  expectresult: {"status": "success"}
+  expectdata: case_flow/test_knowledgeqa_pdf.txt
+# # 知识库问答_txt
+# - id: 技能_知识库问答
+#   url: /api/v1/process/
+#   case_name: 知识库问答_txt
+#   method: post
+#   body: {"inputs": {"query":"卷卷的愿望","id":"RetrievalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_txt.txt
+# # 知识库问答_md
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123
+#   case_name: 知识库问答_md
+#   method: post
+#   body: {"inputs": {"query":"test.md的内容","id":"RetrievalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_md.txt
+# # 知识库问答_pptx
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_pptx
+#   method: post
+#   body: {"inputs": {"query":"创建人","id":"RetrievalQA-x5nap"}}
+#   expectresult: {"status": "success"} 
+#   expectdata: knowlage_qa/test_knowlageqa_pptx.txt  
+# # 知识库问答_ppt
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_ppt
+#   method: post
+#   body: {"inputs": {"query":"开学日期","id":"RetrivalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_ppt.txt
+# # 知识库问答_docx
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_docx
+#   method: post
+#   body: {"inputs": {"query":"测试日期","id":"RetrievalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_docx.txt 
+# # 知识库问答_doc
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_doc
+#   method: post  
+#   body: {"inputs": {"query":"王传军的学历","id":"RetrievalQA-x5nap"}} 
+#   expectresult: {"status": "success"} 
+#   expectdata: knowlage_qa/test_knowlageqa_doc.txt   
+# # # 知识库问答_xlsx
+# # - id: 技能_知识库问答
+# #   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+# #   case_name: 知识库问答_xlsx
+# #   method: post  
+# #   body: {"inputs": {"query":"","id":"RetrivalQA-x5nap"}} 
+# #   expectresult: {"status": "success"}
+#   # expectdata: knowlage_qa/test_knowlageqa_xlsx.txt
+# #知识库问答_jpg
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_jpg
+#   method: post  
+#   body: {"inputs": {"query":"危化品经营许可证的企业名称","id":"RetrivalQA-x5nap"}} 
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_jpg.txt
+# #知识库问答_png
+# - id: 技能_知识库问答
+#   url: /api/v1/process/927f3728-3ced-4b51-a252-8dd806cd1123 
+#   case_name: 知识库问答_png
+#   method: post
+#   body: {"inputs": {"query":"江苏银行的账户名称","id":"RetrivalQA-x5nap"}}
+#   expectresult: {"status": "success"}
+#   expectdata: knowlage_qa/test_knowlageqa_png.txt 

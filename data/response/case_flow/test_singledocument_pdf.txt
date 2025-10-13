@@ -1,0 +1,1 @@
+{'status_code': 200, 'status_message': 'SUCCESS', 'data': {'result': {'result': '合同签约日期是2019年9月5日。', 'source': 0, 'message_id': 387051, 'answer': '合同签约日期是2019年9月5日。'}, 'session_id': 'GBR30N:99d92b843d62b9fcbc2c9aa0c18c1af7e1081c4942fca02a4a81a15bb83102ad', 'backend': 'anyio'}}

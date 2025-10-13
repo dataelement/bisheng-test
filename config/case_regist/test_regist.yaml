@@ -1,0 +1,7 @@
+case_groups:
+- id: bisheng_regist接口
+  url: /api/v1/user/regist
+  case_name: regist接口
+  method: post
+  body: {"user_name": "注册api_","password": "dataelem"}
+  expectdata: regist_data/test_regist_success.txt

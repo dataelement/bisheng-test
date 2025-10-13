@@ -1,0 +1,17 @@
+{
+    "status_code": 200,
+    "status_message": "SUCCESS",
+    "data": {
+        "model": "337",
+        "name": "s",
+        "type": 0,
+        "index_name": "col_1755683924_2197ba5d",
+        "create_time": "2025-08-20T17:58:44",
+        "id": 1892,
+        "description": "s",
+        "user_id": 12,
+        "collection_name": "partition_337_knowledge_1",
+        "state": 1,
+        "update_time": "2025-08-20T17:58:44"
+    }
+}

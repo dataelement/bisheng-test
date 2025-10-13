@@ -1,0 +1,15 @@
+case_groups:
+- id: bisheng_role接口
+  url: /api/v1/role/list
+  case_name: 获取role的列表接口
+  method: get
+  expectresult: {"status_code": 200}
+  expectdata: role_data/test_getrolelist.txt
+#   expectdata: login_data/test_login_pwerr.txt
+# - id: bisheng_login接口
+#   url: /api/v1/user/login
+#   case_name: login接口_用户名&密码为空
+#   method: post
+#   body: {"user_name": "333", "password": ""}
+#   expectresult: {"status": "fail"}
+#   expectdata: login_data/test_login_pwerr.txt

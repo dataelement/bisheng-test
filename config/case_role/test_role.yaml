@@ -1,0 +1,7 @@
+case_groups:
+- id: bisheng_role接口
+  url: /api/v1/role/add
+  case_name: 添加role的接口
+  method: post
+  body: {"role_name": "RoleAPITest_" , "remark": "手动创建用户"} 
+  expectresult: {"status_code": 200}

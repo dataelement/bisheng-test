@@ -1,0 +1,83 @@
+{
+    "status_code": 200,
+    "status_message": "SUCCESS",
+    "data": [
+        {
+            "role_name": "普通用户",
+            "update_time": "2023-10-25T12:00:50",
+            "id": 2,
+            "remark": "一般权限管理员",
+            "create_time": "2023-10-25T12:00:50"
+        },
+        {
+            "role_name": "Sara回归",
+            "update_time": "2023-11-01T21:19:18",
+            "id": 3,
+            "remark": "手动创建用户",
+            "create_time": "2023-11-01T21:19:18"
+        },
+        {
+            "role_name": "Sara_A",
+            "update_time": "2023-11-14T18:20:41",
+            "id": 4,
+            "remark": "手动创建用户",
+            "create_time": "2023-11-14T18:20:41"
+        },
+        {
+            "role_name": "ceshi",
+            "update_time": "2023-11-23T12:37:15",
+            "id": 6,
+            "remark": "手动创建用户",
+            "create_time": "2023-11-23T12:37:15"
+        },
+        {
+            "role_name": "Sara1205回归",
+            "update_time": "2023-12-05T16:36:44",
+            "id": 7,
+            "remark": "手动创建用户",
+            "create_time": "2023-12-05T16:36:44"
+        },
+        {
+            "role_name": "法律法规",
+            "update_time": "2023-12-11T14:36:02",
+            "id": 8,
+            "remark": "手动创建用户",
+            "create_time": "2023-12-11T14:36:02"
+        },
+        {
+            "role_name": "共享演示",
+            "update_time": "2023-12-21T00:55:09",
+            "id": 9,
+            "remark": "手动创建用户",
+            "create_time": "2023-12-21T00:55:09"
+        },
+        {
+            "role_name": "Sara_021回归",
+            "update_time": "2023-12-26T18:44:19",
+            "id": 10,
+            "remark": "手动创建用户",
+            "create_time": "2023-12-26T18:44:19"
+        },
+        {
+            "role_name": "4信达资产",
+            "update_time": "2024-01-05T17:02:38",
+            "id": 11,
+            "remark": "手动创建用户",
+            "create_time": "2024-01-05T16:57:44"
+        },
+        {
+            "role_name": "4廊坊银行个金知识库",
+            "update_time": "2024-01-19T15:37:02",
+            "id": 12,
+            "remark": "手动创建用户",
+            "create_time": "2024-01-19T15:37:02"
+        },
+        {
+            "role_name": "230",
+            "update_time": "2024-01-24T21:47:31",
+            "id": 13,
+            "remark": "手动创建用户",
+            "create_time": "2024-01-24T21:47:31"
+        }
+    ]
+}
